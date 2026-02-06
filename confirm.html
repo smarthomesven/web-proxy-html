@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Dialog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .dialog-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .website-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .button {
+            border: none;
+            border-radius: 8px;
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 100px;
+        }
+
+        .yes-button {
+            background-color: #22C55E;
+            color: white;
+        }
+
+        .yes-button:hover {
+            background-color: #16A34A;
+        }
+
+        .no-button {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        .no-button:hover {
+            background-color: #DC2626;
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="dialog-container">
+        <div class="website-name" id="websiteName">&lt;website&gt; says:</div>
+        <div class="message" id="message">&lt;message&gt;</div>
+        <div class="button-container">
+            <button class="button no-button" id="noButton" onclick="handleResponse(false)">No</button>
+            <button class="button yes-button" id="yesButton" onclick="handleResponse(true)">Yes</button>
+        </div>
+    </div>
+
+    <script>
+        // Get query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const website = urlParams.get('website') || '<website>';
+        const message = urlParams.get('message') || '<message>';
+        const homeyId = urlParams.get('homeyid') || '';
+
+        // Update the DOM
+        document.getElementById('websiteName').textContent = website + ' says:';
+        document.getElementById('message').textContent = message;
+
+        async function handleResponse(answer) {
+            // Disable buttons to prevent double-clicks
+            document.getElementById('yesButton').disabled = true;
+            document.getElementById('noButton').disabled = true;
+
+            try {
+                // Make the fetch request
+                const url = `https://webhooks.athom.com/6985abd5e37cf71eb068859e/?homey=${encodeURIComponent(homeyId)}&answer=${answer}`;
+                await fetch(url);
+            } catch (error) {
+                console.error('Failed to send response:', error);
+            } finally {
+                // Close the window after sending the response
+                window.close();
+            }
+        }
+    </script>
+</body>
+</html>
