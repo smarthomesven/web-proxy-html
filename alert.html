@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alert Dialog</title>
+    <title>Alert from Web Proxy</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
             padding: 20px;
         }
 
-        .dialog-container {
+        .container {
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -31,21 +31,21 @@
             text-align: center;
         }
 
-        .website-name {
+        .site {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 30px;
             color: #333;
         }
 
-        .message {
+        .msg {
             font-size: 16px;
             color: #666;
             margin-bottom: 30px;
             line-height: 1.5;
         }
 
-        .ok-button {
+        .ok {
             background-color: #4169E1;
             color: white;
             border: none;
@@ -57,31 +57,31 @@
             transition: background-color 0.2s;
         }
 
-        .ok-button:hover {
+        .ok:hover {
             background-color: #3557C1;
         }
 
-        .ok-button:active {
+        .ok:active {
             transform: scale(0.98);
         }
     </style>
 </head>
 <body>
-    <div class="dialog-container">
-        <div class="website-name" id="websiteName">&lt;website&gt; says:</div>
-        <div class="message" id="message">&lt;message&gt;</div>
-        <button class="ok-button" onclick="window.close()">OK</button>
+    <div class="container">
+        <div class="site" id="site">&lt;website&gt; says:</div>
+        <div class="message" id="msg">&lt;message&gt;</div>
+        <button class="ok" onclick="window.close()">OK</button>
     </div>
 
     <script>
         // Get query parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const website = urlParams.get('w') || 'Website';
-        const message = urlParams.get('m') || '<error parsing message>';
+        const site = urlParams.get('w') || 'Website';
+        const msg = urlParams.get('m') || '<error parsing message>';
 
         // Update the DOM
-        document.getElementById('websiteName').textContent = website + ' says:';
-        document.getElementById('message').textContent = message;
+        document.getElementById('site').textContent = site + ' says:';
+        document.getElementById('msg').textContent = msg;
     </script>
 </body>
 </html>
