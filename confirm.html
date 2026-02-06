@@ -92,7 +92,7 @@
 </head>
 <body>
     <div class="dialog-container">
-        <div class="website-name" id="websiteName">&lt;website&gt; says:</div>
+        <div class="website-name" id="websiteName">&lt;website&gt; asks:</div>
         <div class="message" id="message">&lt;message&gt;</div>
         <div class="button-container">
             <button class="button no-button" id="noButton" onclick="handleResponse(false)">No</button>
@@ -103,9 +103,10 @@
     <script>
         // Get query parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const website = urlParams.get('website') || '<website>';
-        const message = urlParams.get('message') || '<message>';
-        const homeyId = urlParams.get('homeyid') || '';
+        const website = urlParams.get('w') || '<website>';
+        const message = urlParams.get('m') || '<message>';
+        const homeyId = urlParams.get('h') || '';
+        const widgetId = urlParams.get('u') || '';
 
         // Update the DOM
         document.getElementById('websiteName').textContent = website + ' says:';
@@ -118,7 +119,7 @@
 
             try {
                 // Make the fetch request
-                const url = `https://webhooks.athom.com/webhook/6985abd5e37cf71eb068859e/?homey=${encodeURIComponent(homeyId)}&answer=${answer}`;
+                const url = `https://webhooks.athom.com/webhook/6985abd5e37cf71eb068859e/?homey=${encodeURIComponent(homeyId)}&answer=${answer}&uuid=${encodeURIComponent(widgetId)}`;
                 await fetch(url);
             } catch (error) {
                 console.error('Failed to send response:', error);
