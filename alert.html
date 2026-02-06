@@ -76,8 +76,8 @@
     <script>
         // Get query parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const website = urlParams.get('website') || '<website>';
-        const message = urlParams.get('message') || '<message>';
+        const website = urlParams.get('w') || 'Website';
+        const message = urlParams.get('m') || '<error parsing message>';
 
         // Update the DOM
         document.getElementById('websiteName').textContent = website + ' says:';
