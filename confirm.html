@@ -118,7 +118,7 @@
 
             try {
                 // Make the fetch request
-                const url = `https://webhooks.athom.com/6985abd5e37cf71eb068859e/?homey=${encodeURIComponent(homeyId)}&answer=${answer}`;
+                const url = `https://webhooks.athom.com/webhook/6985abd5e37cf71eb068859e/?homey=${encodeURIComponent(homeyId)}&answer=${answer}`;
                 await fetch(url);
             } catch (error) {
                 console.error('Failed to send response:', error);
